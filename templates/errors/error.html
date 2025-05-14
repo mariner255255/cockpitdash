@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Error {{ error_code }} - Task Manager{% endblock %}
+
+{% block extra_head %}
+<style>
+    .error-container {
+        padding: 2rem;
+        border-radius: 1rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="col-md-6 text-center">
+            <div class="error-container">
+                <h1 class="display-1 text-danger mb-4">{{ error_code }}</h1>
+                <p class="lead mb-5">{{ error_message }}</p>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <a href="{% url 'home' %}" class="btn btn-primary">
+                        <i class="fas fa-home"></i> Return to Home
+                    </a>
+                    {% if error_code == 403 and not user.is_authenticated %}
+                    <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary">
+                        <i class="fas fa-sign-in-alt"></i> Log In
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Delete Task - Task Manager{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="mb-0">Delete Task</h2>
+                </div>
+                <div class="card-body">
+                    <p class="mb-4">
+                        Are you sure you want to delete the task "<strong>{{ task.title }}</strong>"?
+                        This action cannot be undone.
+                    </p>
+
+                    {% if task.assigned_to %}
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        This task is currently assigned to <strong>{{ task.assigned_to.username }}</strong>.
+                        They will be notified of the deletion.
+                    </div>
+                    {% endif %}
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Delete Task
+                            </button>
+                            <a href="{% url 'tasks:task_detail' task.pk %}" class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

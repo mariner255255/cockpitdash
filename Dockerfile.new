@@ -1,0 +1,43 @@
+# Use Python 3.11 as base image
+FROM python:3.11-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV NODE_VERSION=18.x
+
+# Set work directory
+WORKDIR /app
+
+# Install system dependencies and Node.js
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    curl \
+    gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install Tailwind CSS
+COPY package*.json ./
+RUN npm install
+
+# Copy project files
+COPY . .
+
+# Build Tailwind CSS
+RUN npm run build:css
+
+# Create static and media directories with proper permissions
+RUN mkdir -p /app/staticfiles /app/media && chmod 777 /app/staticfiles /app/media
+
+# Create a non-root user but allow static file writes
+RUN useradd -m appuser && chown -R appuser:appuser /app
+USER appuser
+
+# Run gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "taskmanager.wsgi:application"]

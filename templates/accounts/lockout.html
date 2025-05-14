@@ -1,0 +1,40 @@
+{% extends 'accounts/auth_base.html' %}
+
+{% block title %}Account Locked - Task Manager{% endblock %}
+
+{% block auth_header %}
+<h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-error-700">Account Locked</h2>
+<p class="mt-2 text-center text-sm text-gray-600">Your account has been temporarily locked</p>
+{% endblock %}
+
+{% block auth_content %}
+<div class="text-center">
+    <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-error-100 mb-4">
+        <svg class="h-6 w-6 text-error-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+        </svg>
+    </div>
+    
+    <div class="mt-3 text-sm text-gray-600">
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% else %}
+            Your account has been temporarily locked due to multiple failed login attempts.
+            Please try again later or contact an administrator for assistance.
+        {% endif %}
+    </div>
+
+    <div class="mt-6 flex justify-center space-x-4">
+        <a href="{% url 'accounts:password_reset' %}" 
+           class="inline-flex items-center rounded-md bg-error-600 px-4 py-2 text-sm font-medium text-white hover:bg-error-700 focus:outline-none focus:ring-2 focus:ring-error-500 focus:ring-offset-2">
+            Reset Password
+        </a>
+        <a href="mailto:alideals.co.uk@gmail.com" 
+           class="inline-flex items-center rounded-md border border-error-600 px-4 py-2 text-sm font-medium text-error-700 hover:bg-error-50 focus:outline-none focus:ring-2 focus:ring-error-500 focus:ring-offset-2">
+            Contact Support
+        </a>
+    </div>
+</div>
+{% endblock %}

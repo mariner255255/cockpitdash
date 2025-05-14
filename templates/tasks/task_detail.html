@@ -1,0 +1,100 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ task.title }} - Task Manager{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="mb-0">{{ task.title }}</h2>                        <div>
+                            {% if task.can_edit %}
+                            <a href="{% url 'tasks:task_edit' task.pk %}" class="btn btn-primary">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            {% endif %}
+                            {% if user.is_superuser or task.created_by == user %}
+                            <a href="{% url 'tasks:task_delete' task.pk %}" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                    <div class="messages mb-4">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5>Status</h5>                            <span class="badge bg-{% if task.status == 'COMPLETED' %}success{% elif task.status == 'IN_PROGRESS' %}primary{% else %}secondary{% endif %}">
+                                {{ task.get_status_display }}
+                            </span>
+                            {% if task.can_edit %}
+                            <form method="post" action="{% url 'tasks:change_task_status' task.pk %}" class="mt-2">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                    <select name="status" class="form-select">
+                                        {% for value, label in task.Status.choices %}
+                                        <option value="{{ value }}" {% if task.status == value %}selected{% endif %}>
+                                            {{ label }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn btn-outline-primary">Update Status</button>
+                                </div>
+                            </form>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Priority</h5>
+                            <span class="badge bg-{% if task.priority == 'HIGH' %}danger{% elif task.priority == 'MEDIUM' %}warning{% else %}info{% endif %}">
+                                {{ task.get_priority_display }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>Description</h5>
+                        <p class="card-text">{{ task.description|linebreaks }}</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Assignment Details</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Created by:</strong> {{ task.created_by.username }}</li>
+                                <li><strong>Created on:</strong> {{ task.created_at|date:"F j, Y, g:i a" }}</li>
+                                <li>
+                                    <strong>Assigned to:</strong>
+                                    {% if task.assigned_to %}
+                                        {{ task.assigned_to.username }}
+                                    {% else %}
+                                        <span class="text-muted">Unassigned</span>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Dates</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Due Date:</strong> {{ task.due_date|date:"F j, Y" }}</li>
+                                <li><strong>Last Updated:</strong> {{ task.updated_at|date:"F j, Y, g:i a" }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

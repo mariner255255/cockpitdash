@@ -1,0 +1,260 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Global styles */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --success-color: #059669;
+    --danger-color: #dc2626;
+    --background-color: #f3f4f6;
+    --text-color: #1f2937;
+    --border-color: #e5e7eb;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+/* Custom styles for Task Manager */
+
+/* Form styles */
+.form-control {
+    width: 100%;
+    padding: 0.625rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    transition: border-color 0.15s ease;
+    margin-bottom: 1rem;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.form-control:invalid {
+    border-color: var(--danger-color);
+}
+
+.form-control:valid {
+    border-color: var(--success-color);
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Card styles */
+.card {
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Button styles */
+.btn {
+    display: inline-block;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+    border-radius: 0.5rem;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Alert styles */
+.alert {
+    border-radius: 0.375rem;
+    margin-bottom: 1rem;
+}
+
+/* Authentication Forms */
+.auth-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.auth-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Login/Register form specific styles */
+.login-form,
+.register-form {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.invalid-feedback {
+    display: block;
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Profile styles */
+.profile-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1.5rem;
+    display: block;
+    border: 3px solid var(--primary-color);
+}
+
+/* Error messages */
+.error-message {
+    color: var(--danger-color);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.errorlist {
+    color: var(--danger-color);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Success messages */
+.success-message {
+    background-color: var(--success-color);
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Message styles */
+.success-message {
+    color: var(--success-color);
+}
+
+.warning-message {
+    color: #f59e0b;
+}
+
+.info-message {
+    color: var(--primary-color);
+}
+
+/* Authentication specific styles */
+.auth-card {
+    border: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.auth-card .card-body {
+    padding: 2rem;
+}
+
+/* Password strength meter */
+.password-strength-meter {
+    margin-top: 0.5rem;
+}
+
+.password-strength-meter .progress {
+    height: 4px;
+    margin-bottom: 0.25rem;
+}
+
+.password-feedback {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+/* Links in auth forms */
+.auth-links {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.auth-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+/* Form validation styles */
+.form-control.is-invalid {
+    border-color: var(--danger-color);
+}
+
+.form-control.is-valid {
+    border-color: var(--success-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .login-form,
+    .register-form {
+        margin: 1rem;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .auth-container, 
+    .profile-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+}

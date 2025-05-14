@@ -1,0 +1,64 @@
+{# Home page template #}
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Welcome - Task Manager{% endblock %}
+
+{% block content %}
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">Task Manager</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">
+            A simple and efficient way to manage your daily tasks. Keep track of your work, set priorities, and never miss a deadline.
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            {% if user.is_authenticated %}
+                <a href="{% url 'tasks:task_list' %}" class="btn btn-primary btn-lg px-4 gap-3">
+                    <i class="fas fa-tasks"></i> View My Tasks
+                </a>
+                <a href="{% url 'tasks:task_create' %}" class="btn btn-outline-secondary btn-lg px-4">
+                    <i class="fas fa-plus"></i> Create New Task
+                </a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="btn btn-primary btn-lg px-4 gap-3">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="{% url 'accounts:register' %}" class="btn btn-outline-secondary btn-lg px-4">
+                    <i class="fas fa-user-plus"></i> Register
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if user.is_authenticated %}
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Quick Actions</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'tasks:task_create' %}" class="text-decoration-none">➕ Create New Task</a></li>
+                    <li class="mt-2"><a href="{% url 'tasks:task_list' %}" class="text-decoration-none">📋 View All Tasks</a></li>
+                    <li class="mt-2"><a href="{% url 'accounts:profile' %}" class="text-decoration-none">👤 Update Profile</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Getting Started</h5>
+                <p class="card-text">Welcome to your task management dashboard! Here's how to get started:</p>
+                <ol>
+                    <li>Click "Create New Task" to add your first task</li>
+                    <li>Set priority levels and due dates</li>
+                    <li>Track progress from your task list</li>
+                    <li>Mark tasks as complete when finished</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{
+  "name": "taskmanager",
+  "version": "1.0.0",
+  "description": "Task Manager with Tailwind CSS",
+  "scripts": {
+    "build:css": "tailwindcss -i ./static/css/src/tailwind.css -o ./static/css/dist/main.css --minify",
+    "watch:css": "tailwindcss -i ./static/css/src/tailwind.css -o ./static/css/dist/main.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.10",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2"
+  }
+}

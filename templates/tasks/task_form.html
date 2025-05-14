@@ -1,0 +1,108 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Edit Task{% else %}Create Task{% endif %} - Task Manager
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        {% if form.instance.pk %}Edit Task{% else %}Create New Task{% endif %}
+                    </h2>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                    <div class="messages mb-4">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">
+                                {{ field.label }}
+                                {% if field.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                            </label>
+                            
+                            {% if field.name == 'due_date' %}
+                                <input type="datetime-local" name="{{ field.name }}" 
+                                       id="{{ field.id_for_label }}"
+                                       class="form-control {% if field.errors %}is-invalid{% endif %}"
+                                       value="{{ field.value|date:'Y-m-d\TH:i' }}"
+                                       required>
+                            {% else %}
+                                {{ field.as_widget }}
+                            {% endif %}
+                            
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+
+                        {% if form.non_field_errors %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                {% if form.instance.pk %}Save Changes{% else %}Create Task{% endif %}
+                            </button>
+                            <a href="{% url 'tasks:task_list' %}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set minimum date for due date field
+    const dueDateInput = document.querySelector('input[type="datetime-local"]');
+    if (dueDateInput) {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        dueDateInput.min = now.toISOString().slice(0, 16);
+    }
+    
+    // Form validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+    });
+});
+</script>
+{% endblock %}
+{% endblock %}
